@@ -1,6 +1,5 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using TaskManager.Core.Entities;
 using TaskManager.Core.Interfaces;
 using TaskManager.Core.Services;
 using TaskManager.Infrastructure.Data;
@@ -13,7 +12,7 @@ using TaskManager.Infrastructure.Validators;
 Scaffold-DbContext "Server=DESKTOP-MI7GISC;Database=TaskManagerDB;Trusted_Connection=true;TrustServerCertificate=true;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Data -Context "TaskManagerContext" -Force
 */
 
-namespace TaskManager.Api // usamos namespace para organizar el codigo
+namespace TaskManager.Api
 {
     public class Program
     {
@@ -27,37 +26,32 @@ namespace TaskManager.Api // usamos namespace para organizar el codigo
             #endregion
 
             #region AutoMapper
-            // Mapea entre entidades (TaskEntity) y DTOs (TaskDto)
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             #endregion
 
             #region Inyección de dependencias
-            // Servicios (Capa de lógica de negocio)
+            // Servicios
             builder.Services.AddTransient<ITaskEntityService, TaskEntityService>();
             builder.Services.AddTransient<ITaskAssignmentService, TaskAssignmentService>();
             builder.Services.AddTransient<IUserService, UserService>();
 
 
-            // Repositorios (Capa de acceso a datos)
+            // Repositorios
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             builder.Services.AddTransient<IUnitOfWork, UnitOfWork>();
             
             #region Configuración de controladores y manejo JSON
             builder.Services.AddControllers().AddNewtonsoftJson(options =>
             {
-                // Evita referencias circulares en entidades relacionadas
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             })
             .ConfigureApiBehaviorOptions(options =>
             {
-                // Evita que ASP.NET rechace modelos inválidos automáticamente
-                // para poder controlarlo manualmente con nuestros filtros
                 options.SuppressModelStateInvalidFilter = true;
             });
             #endregion
 
             #region Filtros personalizados
-            // Aplica el filtro de validación a todos los controladores
             builder.Services.AddControllers(options =>
             {
                 options.Filters.Add<ValidationFilter>();
@@ -70,22 +64,16 @@ namespace TaskManager.Api // usamos namespace para organizar el codigo
             builder.Services.AddValidatorsFromAssemblyContaining<GetByIdRequestValidator>();
             #endregion
 
-            // Servicio genérico de validación
             builder.Services.AddScoped<IValidationService, ValidationService>();
             #endregion
 
             var app = builder.Build();
 
-            #region Configuración del pipeline HTTP
-            // Redirige a HTTPS
             app.UseHttpsRedirection();
 
-            // Autorización básica (si se agrega autenticación)
             app.UseAuthorization();
 
-            // Mapeo de controladores (rutas API)
             app.MapControllers();
-            #endregion
 
             app.Run();
         }
