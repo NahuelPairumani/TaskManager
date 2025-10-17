@@ -1,0 +1,465 @@
+{
+	"info": {
+		"_postman_id": "08897bfd-f67e-470d-ad01-0ef7141d9a01",
+		"name": "TaskManager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47633666",
+		"_collection_link": "https://nahuel-njps-3576956.postman.co/workspace/Nahuel-Jos%25C3%25A9-Pairumani-Saavedra'~501d51bb-acc9-4d7c-8a5c-a0829bdb73e6/collection/47633666-08897bfd-f67e-470d-ad01-0ef7141d9a01?action=share&source=collection_link&creator=47633666"
+	},
+	"item": [
+		{
+			"name": "TaskEntity",
+			"item": [
+				{
+					"name": "GetTasksDtoMapper",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/taskentity/dto/mapper",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskentity",
+								"dto",
+								"mapper"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTaskEntityDtoMapperById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/taskentity/dto/mapper/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskentity",
+								"dto",
+								"mapper",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InsertTaskEntityDtoMapper",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ProjectId\": 2,\r\n    \"Title\": \"tarea 123\",\r\n    \"Description\": \"Nueva tarea 123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7078/api/taskentity/dto/mapper",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskentity",
+								"dto",
+								"mapper"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateTaskEntityDtoMapper",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\" : 1,\r\n    \"projectId\": 1,\r\n    \"Title\": \"tarea actualizada 123\",\r\n    \"Description\": \"Actualizacion de la primera tarea\",\r\n    \"DueDate\": \"15-07-2026\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7078/api/taskentity/dto/mapper/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskentity",
+								"dto",
+								"mapper",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteTaskEntityDtoMapper",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ProjectId\": 1,\r\n    \"StatusId\": 1,\r\n    \"Title\": \"Actualizar documentación\",\r\n    \"Description\": \"Revisar y actualizar el manual de usuario\",\r\n    \"DueDate\": \"28-12-2025\"\r\n}"
+						},
+						"url": {
+							"raw": "https://localhost:7078/api/taskentity/dto/mapper/5",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskentity",
+								"dto",
+								"mapper",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchTasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/taskentity/dto/mapper/search?text=tarea",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskentity",
+								"dto",
+								"mapper",
+								"search"
+							],
+							"query": [
+								{
+									"key": "text",
+									"value": "tarea"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllProjectTasks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/taskentity/dto/mapper/projecttasks/2?statusId=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskentity",
+								"dto",
+								"mapper",
+								"projecttasks",
+								"2"
+							],
+							"query": [
+								{
+									"key": "statusId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "GetAllUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/user/get",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"user",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/user/get/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"user",
+								"get",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InsertUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Nombre de persona 5\",\r\n  \"email\": \"ejemplo7@gmail.com\",\r\n  \"password\": \"Ab12345678\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7078/api/user/insert",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"user",
+								"insert"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\" : 4,\r\n    \"name\": \"Nombre de persona 3 cambiado\",\r\n    \"email\": \"ejemplo2@gmail.com\",\r\n    \"password\": \"Ab1234567899\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7078/api/user/update/4",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"user",
+								"update",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/user/delete/5",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"user",
+								"delete",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TaskAssignment",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/taskassignment/get",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskassignment",
+								"get"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"taskId\": 3,\r\n  \"userId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7078/api/taskassignment/assign",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskassignment",
+								"assign"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/taskassignment/delete/3",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskassignment",
+								"delete",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTaskByUser",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/taskassignment/tasks/user/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskassignment",
+								"tasks",
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUsersByTask",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/taskassignment/users/task/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskassignment",
+								"users",
+								"task",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
