@@ -37,17 +37,11 @@ namespace TaskManager.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task Delete(T entity)
+        public async Task Delete(int id)
         {
+            T entity = await GetById(id);
             _entities.Remove(entity);
             await _context.SaveChangesAsync();
         }
-
-        /*
-        public async Task<IEnumerable<T>> Find(Expression<Func<T, bool>> predicate)
-        {
-            return await _entities.Where(predicate).ToListAsync();
-        }
-        */
     }
 }

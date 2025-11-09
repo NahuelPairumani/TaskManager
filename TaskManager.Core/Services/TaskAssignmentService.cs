@@ -1,5 +1,8 @@
-﻿using TaskManager.Core.Entities;
+﻿using System.Net;
+using TaskManager.Core.CustomEntities;
+using TaskManager.Core.Entities;
 using TaskManager.Core.Interfaces;
+using TaskManager.Core.QueryFilters;
 
 namespace TaskManager.Core.Services
 {
@@ -12,9 +15,35 @@ namespace TaskManager.Core.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<TaskAssignment>> GetAllAssignmentsAsync()
+        public async Task<ResponseData> GetAllAssignmentsAsync(TaskAssignmentQueryFilter filters)
         {
-            return await _unitOfWork.TaskAssignmentRepository.GetAll();
+            var assignments = await _unitOfWork.TaskAssignmentRepository.GetAll();
+
+            if (filters.TaskId != null)
+                assignments = assignments.Where(t => t.TaskId == filters.TaskId);
+
+            if (filters.UserId != null)
+                assignments = assignments.Where(t => t.UserId == filters.UserId);
+
+            var pagedTasks = PagedList<object>.Create(assignments, filters.PageNumber, filters.PageSize);
+            if (pagedTasks.Any())
+            {
+                return new ResponseData()
+                {
+                    Messages = new Message[] { new() { Type = "Information", Description = "Registros de asignaciones recuperados correctamente" } },
+                    Pagination = pagedTasks,
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+            else
+            {
+                return new ResponseData()
+                {
+                    Messages = new Message[] { new() { Type = "Warning", Description = "No fue posible recuperar la cantidad de registros" } },
+                    Pagination = pagedTasks,
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
         }
 
         public async Task<TaskAssignment> GetAssignmentAsync(int id)
@@ -24,6 +53,67 @@ namespace TaskManager.Core.Services
                 throw new Exception("Asignación no encontrada");
 
             return assignment;
+        }
+
+        // Dapper *********************************************************
+
+        /// <summary>
+        /// Recupera todos los registros de TaskAssignment.
+        /// </summary>
+        public async Task<ResponseData> GetAllAssignmentsDapperAsync(TaskAssignmentQueryFilter filters)
+        {
+            var assignments = await _unitOfWork.TaskAssignmentRepository.GetAllAssignmentsDapperAsync();
+        
+            if (filters.TaskId != null)
+                assignments = assignments.Where(t => t.TaskId == filters.TaskId);
+
+            if (filters.UserId != null)
+                assignments = assignments.Where(t => t.UserId == filters.UserId);
+
+            var pagedTasks = PagedList<object>.Create(assignments, filters.PageNumber, filters.PageSize);
+
+            if (pagedTasks.Any())
+            {
+                return new ResponseData()
+                {
+                    Messages = new Message[] { new() { Type = "Information", Description = "Registros de asignaciones recuperados correctamente" } },
+                    Pagination = pagedTasks,
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+            else
+            {
+                return new ResponseData()
+                {
+                    Messages = new Message[] { new() { Type = "Warning", Description = "No fue posible recuperar la cantidad de registros" } },
+                    Pagination = pagedTasks,
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+        }
+
+        /// <summary>
+        /// Recupera un registro de TaskAssignment por Id.
+        /// </summary>
+        public async Task<ResponseData> GetByIdDapperAsync(int id)
+        {
+            var taskAssignment = await _unitOfWork.TaskAssignmentRepository.GetByIdDapperAsync(id);
+
+            if (taskAssignment != null)
+            {
+                return new ResponseData
+                {
+                    Data = taskAssignment,
+                    Messages = new[] { new Message { Type = "Information", Description = $"Registro con Id={id} recuperado correctamente." } },
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+
+            return new ResponseData
+            {
+                Messages = new[] { new Message { Type = "Warning", Description = $"No se encontró el registro con Id={id}." } },
+                StatusCode = HttpStatusCode.NotFound
+            };
         }
 
         public async Task AssignTaskToUserAsync(TaskAssignment assignment)
@@ -36,10 +126,12 @@ namespace TaskManager.Core.Services
             if (user == null)
                 throw new Exception("El usuario no existe");
 
+            /*
             // Evitar asignaciones duplicadas
             var existing = await _unitOfWork.TaskAssignmentRepository.GetAssignmentAsync(assignment.TaskId, assignment.UserId);
             if (existing != null)
                 throw new Exception("Esta tarea ya está asignada a este usuario");
+            */
 
             await _unitOfWork.TaskAssignmentRepository.Add(assignment);
             await _unitOfWork.SaveChangesAsync();
@@ -51,9 +143,10 @@ namespace TaskManager.Core.Services
             if (assignment == null)
                 throw new Exception("Asignación no encontrada");
 
-            await _unitOfWork.TaskAssignmentRepository.Delete(assignment);
+            await _unitOfWork.TaskAssignmentRepository.Delete(id);
         }
 
+        /*
         public async Task<IEnumerable<TaskEntity>> GetTasksByUserAsync(int userId)
         {
             var assignments = await _unitOfWork.TaskAssignmentRepository.GetAssignmentsByUserIdAsync(userId);
@@ -79,5 +172,6 @@ namespace TaskManager.Core.Services
             }
             return users;
         }
+        */
     }
 }

@@ -1,10 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TaskManager.Core.Entities;
 
 namespace TaskManager.Infrastructure.Data.Configurations
@@ -22,11 +17,11 @@ namespace TaskManager.Infrastructure.Data.Configurations
             builder.Property(e => e.Email)
                 .HasMaxLength(150)
                 .IsUnicode(false);
-            builder.Property(e => e.Name)
+            builder.Property(e => e.FirstName)
                 .HasMaxLength(100)
                 .IsUnicode(false);
-            builder.Property(e => e.PasswordHash)
-                .HasMaxLength(200)
+            builder.Property(e => e.LastName)
+                .HasMaxLength(100)
                 .IsUnicode(false);
         }
     }

@@ -16,7 +16,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:7078/api/taskentity/dto/mapper",
+							"raw": "https://localhost:7078/api/taskentity/dto/mapper?pageSize=6&pageNumber=1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -27,6 +27,16 @@
 								"taskentity",
 								"dto",
 								"mapper"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "6"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -62,7 +72,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"ProjectId\": 2,\r\n    \"Title\": \"tarea 123\",\r\n    \"Description\": \"Nueva tarea 123\"\r\n}",
+							"raw": "{\r\n    \"ProjectId\": 1,\r\n    \"Title\": \"tarea numero 1\",\r\n    \"Description\": \"tarea filtrada por el descripcion\",\r\n    \"DueDate\" : \"31-12-2025\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -93,7 +103,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"Id\" : 1,\r\n    \"projectId\": 1,\r\n    \"Title\": \"tarea actualizada 123\",\r\n    \"Description\": \"Actualizacion de la primera tarea\",\r\n    \"DueDate\": \"15-07-2026\"\r\n}",
+							"raw": "{\r\n    \"Id\" : 12,\r\n    \"projectId\": 1,\r\n    \"Title\": \"tarea actualizada 123\",\r\n    \"Description\": \"Actualizacion de la primera tarea\",\r\n    \"DueDate\": \"15-07-2026\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -101,7 +111,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:7078/api/taskentity/dto/mapper/1",
+							"raw": "https://localhost:7078/api/taskentity/dto/mapper/12",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -112,7 +122,7 @@
 								"taskentity",
 								"dto",
 								"mapper",
-								"1"
+								"12"
 							]
 						}
 					},
@@ -128,7 +138,7 @@
 							"raw": "{\r\n    \"ProjectId\": 1,\r\n    \"StatusId\": 1,\r\n    \"Title\": \"Actualizar documentación\",\r\n    \"Description\": \"Revisar y actualizar el manual de usuario\",\r\n    \"DueDate\": \"28-12-2025\"\r\n}"
 						},
 						"url": {
-							"raw": "https://localhost:7078/api/taskentity/dto/mapper/5",
+							"raw": "https://localhost:7078/api/taskentity/dto/mapper/4",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -139,19 +149,19 @@
 								"taskentity",
 								"dto",
 								"mapper",
-								"5"
+								"4"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "SearchTasks",
+					"name": "GetTasksDtoDapper",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:7078/api/taskentity/dto/mapper/search?text=tarea",
+							"raw": "https://localhost:7078/api/v2/taskentity/dapper?pageSize=6&pageNumber=1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -159,46 +169,66 @@
 							"port": "7078",
 							"path": [
 								"api",
+								"v2",
 								"taskentity",
-								"dto",
-								"mapper",
-								"search"
+								"dapper"
 							],
 							"query": [
 								{
-									"key": "text",
-									"value": "tarea"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetAllProjectTasks",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:7078/api/taskentity/dto/mapper/projecttasks/2?statusId=1",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "7078",
-							"path": [
-								"api",
-								"taskentity",
-								"dto",
-								"mapper",
-								"projecttasks",
-								"2"
-							],
-							"query": [
+									"key": "pageSize",
+									"value": "6"
+								},
 								{
-									"key": "statusId",
+									"key": "pageNumber",
 									"value": "1"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTaskByIdDapperAsync",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/v2/taskentity/dapper/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"v2",
+								"taskentity",
+								"dapper",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetTaskCountByStatus",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/v2/taskentity/dapper/countStatuses/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"v2",
+								"taskentity",
+								"dapper",
+								"countStatuses",
+								"2"
 							]
 						}
 					},
@@ -215,7 +245,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:7078/api/user/get",
+							"raw": "https://localhost:7078/api/user/get/efc?pageSize=6&pageNumber=1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -224,7 +254,18 @@
 							"path": [
 								"api",
 								"user",
-								"get"
+								"get",
+								"efc"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "6"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -236,7 +277,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:7078/api/user/get/2",
+							"raw": "https://localhost:7078/api/user/get/efc/2",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -246,6 +287,7 @@
 								"api",
 								"user",
 								"get",
+								"efc",
 								"2"
 							]
 						}
@@ -259,7 +301,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Nombre de persona 5\",\r\n  \"email\": \"ejemplo7@gmail.com\",\r\n  \"password\": \"Ab12345678\"\r\n}\r\n",
+							"raw": "{\r\n  \"firstName\": \"Nombre 6\",\r\n  \"lastName\": \"Apellido 6\",\r\n  \"email\": \"ejemplo8@gmail.com\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -289,7 +331,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\" : 4,\r\n    \"name\": \"Nombre de persona 3 cambiado\",\r\n    \"email\": \"ejemplo2@gmail.com\",\r\n    \"password\": \"Ab1234567899\"\r\n}\r\n",
+							"raw": "{\r\n    \"id\" : 4,\r\n    \"firstName\": \"Nombre 5\",\r\n    \"lastName\": \"Apellido 5\",\r\n    \"email\": \"ejemplo345@gmail.com\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -319,7 +361,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:7078/api/user/delete/5",
+							"raw": "https://localhost:7078/api/user/delete/1004",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -329,7 +371,230 @@
 								"api",
 								"user",
 								"delete",
-								"5"
+								"1004"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllUsersDapper",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/user/get/dapper?pageSize=6&pageNumber=1&email=z@",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"user",
+								"get",
+								"dapper"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "6"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								},
+								{
+									"key": "email",
+									"value": "z@"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserByIdDapper",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/user/get/dapper/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"user",
+								"get",
+								"dapper",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TaskComment",
+			"item": [
+				{
+					"name": "GetAllComments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/taskcomment/dapper?pageSize=6&pageNumber=1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskcomment",
+								"dapper"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "6"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCommentById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/taskcomment/dapper/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskcomment",
+								"dapper",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetCommentsByTaskId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/taskcomment/dapper/task/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskcomment",
+								"dapper",
+								"task",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InsertComment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"taskId\": 1,\r\n  \"userId\": 2,\r\n  \"comment\": \"este es un comentario de tarea  2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7078/api/taskcomment/post",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskcomment",
+								"post"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateComment",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\": 1,\r\n  \"taskId\": 1,\r\n  \"userId\": 3,\r\n  \"comment\": \"este es un comentario de tarea actualizado\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:7078/api/taskcomment/put/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskcomment",
+								"put",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteComment",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:7078/api/taskcomment/delete/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "7078",
+							"path": [
+								"api",
+								"taskcomment",
+								"delete",
+								"2"
 							]
 						}
 					},
@@ -346,7 +611,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:7078/api/taskassignment/get",
+							"raw": "https://localhost:7078/api/taskassignment/get/efc?pageSize=6&pageNumber=1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -355,7 +620,18 @@
 							"path": [
 								"api",
 								"taskassignment",
-								"get"
+								"get",
+								"efc"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "6"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -414,12 +690,12 @@
 					"response": []
 				},
 				{
-					"name": "GetTaskByUser",
+					"name": "GetAllDapper",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:7078/api/taskassignment/tasks/user/2",
+							"raw": "https://localhost:7078/api/taskassignment/get/dapper?pageSize=6&pageNumber=1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -428,21 +704,30 @@
 							"path": [
 								"api",
 								"taskassignment",
-								"tasks",
-								"user",
-								"2"
+								"get",
+								"dapper"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "6"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								}
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "GetUsersByTask",
+					"name": "GetByIdDapper",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "https://localhost:7078/api/taskassignment/users/task/2",
+							"raw": "https://localhost:7078/api/taskassignment/get/dapper/2?pageSize=6&pageNumber=1",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -451,9 +736,19 @@
 							"path": [
 								"api",
 								"taskassignment",
-								"users",
-								"task",
+								"get",
+								"dapper",
 								"2"
+							],
+							"query": [
+								{
+									"key": "pageSize",
+									"value": "6"
+								},
+								{
+									"key": "pageNumber",
+									"value": "1"
+								}
 							]
 						}
 					},

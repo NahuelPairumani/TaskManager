@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace TaskManager.Core.Entities;
+﻿namespace TaskManager.Core.Entities;
 
 public partial class Role : BaseEntity
 {

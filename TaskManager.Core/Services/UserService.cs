@@ -1,7 +1,10 @@
-﻿using TaskManager.Core.Entities;
-using TaskManager.Core.Interfaces;
+﻿using System.Net;
 using System.Security.Cryptography;
 using System.Text;
+using TaskManager.Core.CustomEntities;
+using TaskManager.Core.Entities;
+using TaskManager.Core.Interfaces;
+using TaskManager.Core.QueryFilters;
 
 namespace TaskManager.Core.Services
 {
@@ -14,9 +17,42 @@ namespace TaskManager.Core.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        public async Task<ResponseData> GetAllUsersAsync(UserQueryFilter filters)
         {
-            return await _unitOfWork.UserRepository.GetAll();
+            var users = await _unitOfWork.UserRepository.GetAll();
+
+            if (filters.FirstName != null)
+            {
+                users = users.Where(t => t.FirstName.ToLower().Contains(filters.FirstName.ToLower()));
+            }
+            if (filters.LastName != null)
+            {
+                users = users.Where(t => t.LastName.ToLower().Contains(filters.LastName.ToLower()));
+            }
+            if (filters.Email != null)
+            {
+                users = users.Where(t => t.Email.ToLower().Contains(filters.Email.ToLower()));
+            }
+
+            var pagedPosts = PagedList<object>.Create(users, filters.PageNumber, filters.PageSize);
+            if (pagedPosts.Any())
+            {
+                return new ResponseData()
+                {
+                    Messages = new Message[] { new() { Type = "Information", Description = "Registros de usuarios recuperados correctamente" } },
+                    Pagination = pagedPosts,
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+            else
+            {
+                return new ResponseData()
+                {
+                    Messages = new Message[] { new() { Type = "Warning", Description = "No fue posible recuperar la cantidad de registros" } },
+                    Pagination = pagedPosts,
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
         }
 
         public async Task<User> GetUserAsync(int id)
@@ -28,6 +64,74 @@ namespace TaskManager.Core.Services
             return user;
         }
 
+        /// <summary>
+        /// Obtiene todos los usuarios utilizando Dapper.
+        /// </summary>
+        /// <returns>Objeto ResponseData con lista de usuarios o mensaje de error.</returns>
+        public async Task<ResponseData> GetAllUsersDapperAsync(UserQueryFilter filters)
+        {
+            var users = await _unitOfWork.UserRepository.GetAllUsersDapperAsync();
+
+            if (filters.FirstName != null)
+            {
+                users = users.Where(t => t.FirstName.ToLower().Contains(filters.FirstName.ToLower()));
+            }
+            if (filters.LastName != null)
+            {
+                users = users.Where(t => t.LastName.ToLower().Contains(filters.LastName.ToLower()));
+            }
+            if (filters.Email != null)
+            {
+                users = users.Where(t => t.Email.ToLower().Contains(filters.Email.ToLower()));
+            }
+
+            var pagedPosts = PagedList<object>.Create(users, filters.PageNumber, filters.PageSize);
+            if (pagedPosts.Any())
+            {
+                return new ResponseData()
+                {
+                    Messages = new Message[] { new() { Type = "Information", Description = "Registros de usuarios recuperados correctamente" } },
+                    Pagination = pagedPosts,
+                    StatusCode = HttpStatusCode.OK
+                };
+            }
+            else
+            {
+                return new ResponseData()
+                {
+                    Messages = new Message[] { new() { Type = "Warning", Description = "No fue posible recuperar la cantidad de registros" } },
+                    Pagination = pagedPosts,
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+        }
+
+        /// <summary>
+        /// Recupera un usuario específico desde la base de datos utilizando Dapper
+        /// </summary>
+        /// <param name="id">Identificador del usuario</param>
+        /// <returns>Objeto ResponseData con la información del usuario</returns>
+        public async Task<ResponseData> GetUserByIdDapperAsync(int id)
+        {
+            var user = await _unitOfWork.UserRepository.GetUserByIdDapperAsync(id);
+
+            if (user == null)
+            {
+                return new ResponseData()
+                {
+                    Messages = new[] { new Message { Type = "Warning", Description = "Usuario no encontrado" } },
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+
+            return new ResponseData()
+            {
+                Data = user,
+                Messages = new[] { new Message { Type = "Information", Description = "Usuario recuperado correctamente" } },
+                StatusCode = HttpStatusCode.OK
+            };
+        }
+
         public async Task InsertUserAsync(User user)
         {
             // Validar que el email no exista
@@ -35,7 +139,6 @@ namespace TaskManager.Core.Services
             if (existing != null)
                 throw new Exception("Ya existe un usuario con el mismo correo electrónico.");
 
-            user.PasswordHash = HashPassword(user.PasswordHash);
             await _unitOfWork.UserRepository.Add(user);
         }
 
@@ -50,28 +153,12 @@ namespace TaskManager.Core.Services
             if (duplicate != null)
                 throw new Exception("Ya existe otro usuario con ese correo electrónico.");
 
-            // Si se envía una nueva contraseña, se actualiza el hash
-            if (!string.IsNullOrWhiteSpace(user.PasswordHash))
-                user.PasswordHash = HashPassword(user.PasswordHash);
-            else
-                user.PasswordHash = existingUser.PasswordHash;
-
             await _unitOfWork.UserRepository.Update(user);
         }
 
-        public async Task DeleteUserAsync(User user)
+        public async Task DeleteUserAsync(int id)
         {
-            await _unitOfWork.UserRepository.Delete(user);
-        }
-
-        private string HashPassword(string password) // Simple hash con SHA256, para no exponer contraseñas en texto plano
-        {
-            using (var sha256 = SHA256.Create())
-            {
-                var bytes = Encoding.UTF8.GetBytes(password);
-                var hash = sha256.ComputeHash(bytes);
-                return BitConverter.ToString(hash).Replace("-", "").ToLower();
-            }
+            await _unitOfWork.UserRepository.Delete(id);
         }
     }
 }

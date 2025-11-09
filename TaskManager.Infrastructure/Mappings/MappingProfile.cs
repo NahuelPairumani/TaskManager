@@ -16,6 +16,9 @@ namespace TaskManager.Infrastructure.Mappings
 
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
+
+            CreateMap<TaskComment, TaskCommentDto>();
+            CreateMap<TaskCommentDto, TaskComment>();
         }
     }
 }

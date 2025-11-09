@@ -1,4 +1,5 @@
-﻿using TaskManager.Core.Entities;
+﻿using System.Data;
+using TaskManager.Core.Entities;
 
 namespace TaskManager.Core.Interfaces
 {
@@ -7,13 +8,18 @@ namespace TaskManager.Core.Interfaces
         ITaskEntityRepository TaskEntityRepository { get; }
         IBaseRepository<Project> ProjectRepository { get; }
         IBaseRepository<Status> StatusRepository { get; }
-
-        //IBaseRepository<User> UserRepository { get; }
         ITaskAssignmentRepository TaskAssignmentRepository { get; }
-
         IUserRepository UserRepository { get; }
+        ITaskCommentRepository TaskCommentRepository { get; }
 
         void SaveChanges();
         Task SaveChangesAsync();
+
+        Task BeginTransaccionAsync();
+        Task CommitAsync();
+        Task RollbackAsync();
+
+        IDbConnection? GetDbConnection();
+        IDbTransaction? GetDbTransaction();
     }
 }
