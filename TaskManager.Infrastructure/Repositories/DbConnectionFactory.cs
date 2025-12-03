@@ -1,7 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using MySqlConnector; // Pomelo
-using SocialMedia.Core.Enum;
+using TaskManager.Core.Enum;
 using TaskManager.Core.Interfaces;
 using System.Data;
 

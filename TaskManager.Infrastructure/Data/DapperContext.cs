@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.Common;
 using TaskManager.Core.Interfaces;
-using SocialMedia.Core.Enum;
+using TaskManager.Core.Enum;
 
 namespace TaskManager.Infrastructure.Data
 {

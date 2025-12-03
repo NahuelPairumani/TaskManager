@@ -20,6 +20,13 @@ namespace TaskManager.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            //Conguracion base
+            builder.Configuration.Sources.Clear();
+            builder.Configuration
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json",
+                    optional: true, reloadOnChange: true);
+
             //Configurar los secretos de usuario
             if (builder.Environment.IsDevelopment())
             {
@@ -33,13 +40,14 @@ namespace TaskManager.Api
             #endregion
 
             builder.Services.AddAutoMapper(typeof(MappingProfile));
-
+            
             // Inyectar las dependencias
             // Servicios
             builder.Services.AddTransient<ITaskEntityService, TaskEntityService>();
             builder.Services.AddTransient<ITaskAssignmentService, TaskAssignmentService>();
             builder.Services.AddTransient<IUserService, UserService>();
             builder.Services.AddTransient<ITaskCommentService, TaskCommentService>();
+
 
             // Repositorios
             builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
@@ -145,7 +153,7 @@ namespace TaskManager.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(options =>
                 {
-                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Backend Social Media API v1");
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Backend Task Manager API v1");
                     options.RoutePrefix = string.Empty;
                 });
             }

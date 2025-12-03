@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using SocialMedia.Core.Enum;
+using TaskManager.Core.Enum;
 using System.Linq.Expressions;
 using TaskManager.Core.CustomEntities;
 using TaskManager.Core.Entities;

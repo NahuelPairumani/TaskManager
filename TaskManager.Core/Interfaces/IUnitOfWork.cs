@@ -11,6 +11,7 @@ namespace TaskManager.Core.Interfaces
         ITaskAssignmentRepository TaskAssignmentRepository { get; }
         IUserRepository UserRepository { get; }
         ITaskCommentRepository TaskCommentRepository { get; }
+        ISecurityRepository SecurityRepository { get; }
 
         void SaveChanges();
         Task SaveChangesAsync();

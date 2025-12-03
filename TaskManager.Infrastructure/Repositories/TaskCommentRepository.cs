@@ -1,4 +1,4 @@
-﻿using SocialMedia.Core.Enum;
+﻿using TaskManager.Core.Enum;
 using TaskManager.Core.Entities;
 using TaskManager.Core.Interfaces;
 using TaskManager.Infrastructure.Data;

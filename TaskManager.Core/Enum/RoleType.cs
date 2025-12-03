@@ -1,8 +1,8 @@
-﻿namespace SocialMedia.Core.Enum
+﻿namespace TaskManager.Core.Enum
 {
     public enum RoleType
     {
-        Adminsitrator,
+        Administrator,
         Consumer,
         User
     }

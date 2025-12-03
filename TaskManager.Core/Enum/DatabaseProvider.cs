@@ -1,4 +1,4 @@
-﻿namespace SocialMedia.Core.Enum
+﻿namespace TaskManager.Core.Enum
 {
     public enum DatabaseProvider
     {

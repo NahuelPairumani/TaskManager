@@ -8,7 +8,8 @@ namespace TaskManager.Core.Interfaces
     {
         Task<IEnumerable<User>> Find(Expression<Func<User, bool>> predicate);
         /// <summary>
-        /// Recupera todos los usuarios mediante una consulta SQL usando Dapper.
+        /// Recupera todos los usuarios 
+        /// nte una consulta SQL usando Dapper.
         /// </summary>
         Task<IEnumerable<User>> GetAllUsersDapperAsync();
 

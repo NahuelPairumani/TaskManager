@@ -16,7 +16,8 @@ namespace TaskManager.Infrastructure.Repositories
         public readonly IBaseRepository<Project>? _projectRepository;
         public readonly IBaseRepository<Status>? _statusRepository;
         public readonly ITaskCommentRepository? _taskCommentRepository;
-        
+        public readonly ISecurityRepository _securityRepository;
+
         public readonly IDapperContext _dapper;
         private IDbContextTransaction? _efTransaction;
 
@@ -43,6 +44,9 @@ namespace TaskManager.Infrastructure.Repositories
 
         public ITaskCommentRepository TaskCommentRepository =>
             _taskCommentRepository ?? new TaskCommentRepository(_context, _dapper);
+
+        public ISecurityRepository SecurityRepository =>
+            _securityRepository ?? new SecurityRepository(_context, _dapper);
 
         public void Dispose()
         {
