@@ -21,7 +21,7 @@ namespace TaskManager.Infrastructure.Repositories
 
         public async Task<Status> GetStatusByIdAsync(int id)
         {
-            var status = await _context.Statuses.FirstOrDefaultAsync(x => x.StatusId == id);
+            var status = await _context.Statuses.FirstOrDefaultAsync(x => x.Id == id);
             return status;
         }
     }

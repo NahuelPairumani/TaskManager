@@ -107,7 +107,7 @@ namespace TaskManager.Api.Controllers
                 var TaskEntityDto = _mapper.Map<TaskEntityDto>(task);
 
                 var response = new ApiResponse<TaskEntityDto>(TaskEntityDto);
-                return Ok(task); // para ver la informacion completa con proyecto y status de actividad
+                return Ok(response); // para ver la informacion completa con proyecto y status de actividad
             }
             catch (Exception err)
             {

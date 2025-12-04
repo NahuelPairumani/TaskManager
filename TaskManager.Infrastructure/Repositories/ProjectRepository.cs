@@ -21,7 +21,7 @@ namespace TaskManager.Infrastructure.Repositories
 
         public async Task<Project> GetProjectByIdAsync(int id)
         {
-            var project = await _context.Status.FirstOrDefaultAsync(x => x.ProjectId == id);
+            var project = await _context.ProjectId.FirstOrDefaultAsync(x => x.Id == id);
             return project;
         }
     }

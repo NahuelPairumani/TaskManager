@@ -126,13 +126,6 @@ namespace TaskManager.Core.Services
             if (user == null)
                 throw new Exception("El usuario no existe");
 
-            /*
-            // Evitar asignaciones duplicadas
-            var existing = await _unitOfWork.TaskAssignmentRepository.GetAssignmentAsync(assignment.TaskId, assignment.UserId);
-            if (existing != null)
-                throw new Exception("Esta tarea ya está asignada a este usuario");
-            */
-
             await _unitOfWork.TaskAssignmentRepository.Add(assignment);
             await _unitOfWork.SaveChangesAsync();
         }
