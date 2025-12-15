@@ -9,22 +9,24 @@ namespace TaskManager.Infrastructure.Filters
     {
         public void OnException(ExceptionContext context)
         {
-            var exception = (BussinesException)context.Exception;
-            var validation = new
+            if (context.Exception is BussinesException exception)
             {
-                Status = 400,
-                Title = "Bad Request",
-                Detail = exception.Message
-            };
+                var validation = new
+                {
+                    Status = 400,
+                    Title = "Bad Request",
+                    Detail = exception.Message
+                };
 
-            var json = new
-            {
-                errors = new[] { validation }
-            };
+                var json = new
+                {
+                    errors = new[] { validation }
+                };
 
-            context.Result = new BadRequestObjectResult(json);
-            context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-            context.ExceptionHandled = true;
+                context.Result = new BadRequestObjectResult(json);
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                context.ExceptionHandled = true;
+            }
         }
     }
 }

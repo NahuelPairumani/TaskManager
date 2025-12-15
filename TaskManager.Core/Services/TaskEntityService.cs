@@ -268,6 +268,7 @@ namespace TaskManager.Core.Services
             {
                 throw new BussinesException("El proyecto asignado a la tarea no existe.");
             }
+            
 
             if (task.StatusId == 0)
             {

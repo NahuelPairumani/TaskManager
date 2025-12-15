@@ -9,6 +9,8 @@ using TaskManager.Core.QueryFilters;
 using TaskManager.Infrastructure.DTOs;
 using TaskManager.Infrastructure.Validators;
 
+using Microsoft.AspNetCore.Authorization;
+
 namespace TaskManager.Api.Controllers
 {
     /// <summary>
@@ -18,6 +20,7 @@ namespace TaskManager.Api.Controllers
     /// Este controlador contiene los endpoints relacionados con la entidad <see cref="User"/>, 
     /// implementados utilizando servicios, validaciones y mapeadores automáticos.
     /// </remarks>
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase

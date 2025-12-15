@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using TaskManager.Core.Entities;
 using TaskManager.Infrastructure.DTOs;
 

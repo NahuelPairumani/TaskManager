@@ -21,7 +21,8 @@ namespace TaskManager.Infrastructure.Data.Configurations
                 .IsUnicode(false);
             builder.Property(e => e.Role)
                 .HasMaxLength(15)
-                .IsUnicode(false);
+                .IsUnicode(false)
+                .HasConversion<string>();
         }
     }
 }

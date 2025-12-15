@@ -10,6 +10,8 @@ using TaskManager.Core.QueryFilters;
 using TaskManager.Infrastructure.DTOs;
 using TaskManager.Infrastructure.Validators;
 
+using Microsoft.AspNetCore.Authorization;
+
 namespace TaskManager.Api.Controllers
 {
     /// <summary>
@@ -20,6 +22,7 @@ namespace TaskManager.Api.Controllers
     /// permitiendo realizar operaciones CRUD utilizando servicios, validaciones y mapeadores automáticos (AutoMapper).
     /// Los métodos incluyen versiones que trabajan con Dapper y soportan filtrado y paginación.
     /// </remarks>
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TaskCommentController : ControllerBase
