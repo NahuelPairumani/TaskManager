@@ -131,5 +131,24 @@ namespace TaskManager.Infrastructure.Repositories
                 throw new Exception($"Error al obtener conteo de tareas por estado: {ex.Message}");
             }
         }
+
+        public async Task<IEnumerable<UserTaskCountResponse>> GetUsersByProjectDapperAsync(int projectId)
+        {
+            try
+            {
+                var sql = _dapper.Provider switch
+                {
+                    DatabaseProvider.SqlServer => TaskQueries.GetUsersByProjectSqlServer,
+                    DatabaseProvider.MySql => TaskQueries.GetUsersByProjectMySql,
+                    _ => throw new NotSupportedException("Provider no soportado")
+                };
+
+                return await _dapper.QueryAsync<UserTaskCountResponse>(sql, new { ProjectId = projectId });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Error al obtener usuarios por proyecto: {ex.Message}");
+            }
+        }
     }
 }

@@ -35,5 +35,7 @@ namespace TaskManager.Core.Interfaces
         /// <param name="projectId">Identificador del proyecto.</param>
         /// <returns>Colección de <see cref="TaskStatusCountResponse"/> con el conteo por estado.</returns>
         Task<IEnumerable<TaskStatusCountResponse>> GetTaskCountByStatusAsync(int projectId);
+
+        Task<IEnumerable<UserTaskCountResponse>> GetUsersByProjectDapperAsync(int projectId);
     }
 }

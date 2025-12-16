@@ -97,5 +97,24 @@
             WHERE T.ProjectId = @ProjectId
             GROUP BY S.StatusName;
         ";
+        public static string GetUsersByProjectSqlServer = @"
+            SELECT 
+                U.Id,
+                U.FirstName,
+                U.LastName,
+                U.Email,
+                COUNT(DISTINCT T.Id) AS TaskCount,
+                P.Name AS ProjectName
+            FROM [User] U
+            INNER JOIN TaskAssignment TA ON U.Id = TA.UserId
+            INNER JOIN TaskEntity T ON TA.TaskId = T.Id
+            INNER JOIN Project P ON T.ProjectId = P.Id
+            WHERE T.ProjectId = @ProjectId
+            GROUP BY U.Id, U.FirstName, U.LastName, U.Email, P.Name;
+        ";
+
+        public static string GetUsersByProjectMySql = @"
+            
+        ";
     }
 }

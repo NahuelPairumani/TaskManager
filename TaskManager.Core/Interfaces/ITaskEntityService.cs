@@ -50,6 +50,8 @@ namespace TaskManager.Core.Interfaces
         /// <returns>Objeto <see cref="ResponseData"/> con el conteo de tareas por estado.</returns>
         Task<ResponseData> GetTaskCountByStatusAsync(int projectId, int pageNumber, int pageSize);
 
+        Task<ResponseData> GetUsersAssignedToProjectAsync(int projectId, int pageNumber, int pageSize);
+
         /// <summary>
         /// Inserta una nueva tarea en el sistema.
         /// </summary>

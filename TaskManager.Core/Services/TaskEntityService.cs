@@ -255,6 +255,42 @@ namespace TaskManager.Core.Services
         }
 
         /// <summary>
+        
+        public async Task<ResponseData> GetUsersAssignedToProjectAsync(int projectId, int pageNumber, int pageSize)
+        {
+            try
+            {
+                var users = await _unitOfWork.TaskEntityRepository.GetUsersByProjectDapperAsync(projectId);
+                var pagedResult = PagedList<object>.Create(users, pageNumber, pageSize);
+
+                if (pagedResult.Any())
+                {
+                    return new ResponseData()
+                    {
+                        Messages = new Message[] { new() { Type = "Information", Description = "Usuarios asignados al proyecto recuperados correctamente" } },
+                        Pagination = pagedResult,
+                        StatusCode = HttpStatusCode.OK
+                    };
+                }
+
+                return new ResponseData()
+                {
+                    Messages = new Message[] { new() { Type = "Warning", Description = "No se encontraron usuarios asignados para el proyecto indicado" } },
+                    Pagination = pagedResult,
+                    StatusCode = HttpStatusCode.NotFound
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseData()
+                {
+                    Messages = new Message[] { new() { Type = "Error", Description = ex.Message } },
+                    StatusCode = HttpStatusCode.InternalServerError
+                };
+            }
+        }
+
+        /// <summary>
         /// Inserta una nueva tarea en la base de datos luego de validar su integridad y contenido.
         /// </summary>
         /// <param name="task">Entidad <see cref="TaskEntity"/> a registrar.</param>

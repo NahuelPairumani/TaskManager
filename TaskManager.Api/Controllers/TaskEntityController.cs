@@ -224,5 +224,42 @@ namespace TaskManager.Api.Controllers
                 return StatusCode((int)HttpStatusCode.InternalServerError, err.Message);
             }
         }
+
+        
+        [HttpGet("get/usersByProject/{idProject}")]
+        public async Task<IActionResult> GetUsersByProject([FromRoute] int idProject, [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
+        {
+            try
+            {
+                var result = await _taskService.GetUsersAssignedToProjectAsync(idProject, pageNumber, pageSize);
+
+                var usersWithCount = result.Pagination;
+                var pagination = new Pagination
+                {
+                    TotalCount = result.Pagination.TotalCount,
+                    PageSize = result.Pagination.PageSize,
+                    CurrentPage = result.Pagination.CurrentPage,
+                    TotalPages = result.Pagination.TotalPages,
+                    HasNextPage = result.Pagination.HasNextPage,
+                    HasPreviousPage = result.Pagination.HasPreviousPage
+                };
+
+                var response = new ApiResponse<IEnumerable<object>>(usersWithCount)
+                {
+                    Pagination = pagination,
+                    Messages = result.Messages
+                };
+
+                return StatusCode((int)result.StatusCode, response);
+            }
+            catch (Exception err)
+            {
+                var responsePost = new ResponseData()
+                {
+                    Messages = new Message[] { new() { Type = "Error", Description = err.Message } },
+                };
+                return StatusCode(500, responsePost);
+            }
+        }
     }
 }
